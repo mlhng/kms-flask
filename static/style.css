@@ -24,6 +24,10 @@ nav a:hover, nav a:active {
     color: #0101c5;
 }
 
+:root {
+    --nav-height: 80px; /*You HAVE To Give A Default Fallback Value*/
+}
+
 /* INDEX PAGE */
 
 /* OVERALL FORMATTING */
@@ -79,7 +83,8 @@ nav a:hover, nav a:active {
 #home-page #motivation, 
 #home-page #resources, 
 #home-page #team{
-    margin: 10% auto;
+    margin: 5% auto;
+    padding-top: var(--nav-height);
 }
 
 /* TEAM TEXT FOR CENTERING IN THE MIDDLE */
