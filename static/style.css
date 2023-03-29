@@ -1,0 +1,159 @@
+/* OVERALL WEBSITE */
+html body {
+    font-family: 'Poppins', serif;
+}
+
+/* NAVIGVATION BAR */
+nav {
+    background-color: #fff;
+    position: absolute;
+}
+
+nav #logo {
+    width: 100%;
+    height: auto;
+    max-width: 250px;
+    margin-left: 25px;
+}
+
+nav a:link, nav a:visited {
+    color: #000;
+}
+
+nav a:hover, nav a:active {
+    color: #0101c5;
+}
+
+/* INDEX PAGE */
+
+/* OVERALL FORMATTING */
+#home-page {
+    margin-top: 10%;
+}
+
+#home-page h1 {
+    color: #000000;
+    font-family: 'Merriweather' 'sans-serif';
+    font-size: 3em;
+    font-weight: bold;  
+    line-height: 1em;
+}
+
+#home-page h2 {
+    color: #000000;
+    font-family: 'Merriweather' 'sans-serif';
+    font-size: 2.5em;
+    font-weight: bold;  
+    line-height: 1em;
+}
+
+#home-page h3 {
+    color: #0101c5;
+    font-size: 1em;
+    text-transform: uppercase;
+    font-weight: bold;  
+}
+
+#home-page p {
+    font-size: 1em;
+    line-height: 2em;
+    color: #C3C3C3;
+}
+
+#home-page #blue-line {
+    width: 50px;
+    height: 2px;
+    background-color: #0101c5;
+    margin: 3% 0%;
+}
+
+/* TEXT PARTS FOR INTRO MOTIVE AND RESOURCES */
+#home-page #intro-text, 
+#home-page #motive-text, 
+#home-page #resources-text {
+    margin: auto; 
+}
+
+/* ALL SECTIONS FORMATTING */
+#home-page #intro, 
+#home-page #motivation, 
+#home-page #resources, 
+#home-page #team{
+    margin: 10% auto;
+}
+
+/* TEAM TEXT FOR CENTERING IN THE MIDDLE */
+#home-page #team-text {
+    text-align: center;
+    margin-bottom: 2.5%;
+}
+
+/* BLUE LINE FOR TEAM TEXT SPECIFICALLY */
+#home-page #team-text #blue-line {
+    margin: 1% auto;
+}
+
+/* RESOURCE LINKS DISPLAY */
+#home-page #resource-links div{
+    margin: 2.5% 0%;
+    text-align: center;
+}
+
+#home-page #resource-links ul,
+#home-page #resource-links a{
+    padding: 0;
+    text-decoration: none;
+}
+
+#home-page #resource-links a:hover, 
+#home-page #resource-links a:active {
+    color: #0101c5;
+    text-decoration: none;
+}
+
+#home-page #resource-links ul li{
+    list-style-type: none;
+}
+
+#home-page #resource-links h4{
+    font-size: 2em;
+}
+
+/* TEAM MEMBER FORMATTING */
+#home-page #team-members{
+    text-align: center;
+}
+
+#home-page #team-members a{
+    font-size: 2em;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#home-page #team-members a:link,
+#home-page #team-members a:visited {
+    color: #000;
+}
+
+#home-page #team-members a:hover, 
+#home-page #team-members a:active {
+    color: #0101c5;
+    text-decoration: none;
+}
+
+#home-page #team-members #member-pic {
+    margin: auto;
+}
+
+#home-page #team-members ul{
+    padding: 0;
+}
+
+#home-page #team-members ul li{
+    list-style-type: none;
+}
+
+/* VISUALIZEEEEE */
+#visualize-page {
+    margin-top: 10%;
+}

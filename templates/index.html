@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div id="home-page">
+    <div id="intro" class="row g-3">
+        <div id="intro-text" class="col-md-6">
+            <h3>ML with Safety in Mind</h3>
+            <h1>Pedestrian Safety in San Francisco</h2>
+            <p>Our website aims to give San Francisco pedestrians and tourists a peace of mind 
+                by providing different tools that assist in spotting potential accident hotspots around them!
+            </p>
+        </div>
+        <img src="../static/images/corpo-website-art.png" class="img-fluid col-md-6"/>
+    </div>
+
+    <div id="motivation" class="row g-3">
+        <img src="../static/images/motivation-art.png" class="img-fluid col-md-5"/>
+        <div id="motive-text" class="col-md-7">
+            <h3>Our Motive</h3>
+            <h2>Why is walking so dangerous?</h2>
+            <div id="blue-line"></div>
+            <p>In 2020, more than 6,700 pedestrians were killed while walking and using wheelchairs, 
+                despite a dramatic decrease in the number of cars on the road and the number of miles traveled.
+            </p>
+            <p>
+                Traffic collisions and deaths are preventable and often occur as a result of the way 
+                transportation in the United States has been designed – for the fast, uninterrupted movement of vehicles.
+            </p>
+        </div>
+    </div>
+
+    <div id="resources" class="row g-3">
+        <div id="resources-text" class="col-md-7">
+            <h3>Resources Used</h3>
+            <h2>Check out past literature!</h2>
+            <div id="blue-line"></div>
+            <p>This project would not be possible without the plentiful of great research 
+                and work already done in this area. Check them out!
+            </p>
+        </div>
+        
+        <div id="resource-links" class="col-md-5">
+            <div id="dataset-link">
+                <h4>Our Main Dataset</h4>
+                <a href="https://data.sfgov.org/Public-Safety/Traffic-Crashes-Resulting-in-Injury/ubvf-ztfx" target="_blank">DataSF Traffic Crashes Dataset</a>
+            </div>
+            <div id="research-link">
+                <h4>Research Papers</h4>
+                <ul>
+                    <li><a href="https://www.mdpi.com/2071-1050/14/4/2436" target="_blank">Predicting Pedestrian Fatality</a></li>
+                    <li><a href="https://www.jtlu.org/index.php/jtlu/article/view/1825" target="_blank">US Crash Hotspots and Traits</a></li>
+                    <li><a href="https://www.tandfonline.com/doi/full/10.1080/01944360902950349" target="_blank">Community Design vs Traffic Safety</a></li>
+                </ul>
+            </div>
+            <div id="misc-link">
+                <h4>Miscellaneous</h4>
+                <ul>
+                    <li><a href="https://tims.berkeley.edu/" target="_blank">UC Berkeley SafeTREC Resources</a></li>
+                    <li><a href="https://www.sfdph.org/dph/hc/HCCommPublHlth/Agendas/2011/february%2015/feb%2015%20pedstrian%20safety%20presentation.pdf" target="_blank">Pedestrian Injuries in SF</a></li>
+                    <li><a href="https://www.vox.com/23178764/florida-us19-deadliest-pedestrian-fatality-crisis" target="_blank">The deadliest road in America</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="team">
+        <div id="team-text">
+            <h3>Our Team</h3>
+            <h2>Who built this product?</h2>
+            <div id="blue-line"></div>
+            <p>Our team is made up of 4 MIDS students. Check them out!</p>
+        </div>
+        <div id="team-members" class="row g-3">
+            <div id="actual-member" class="col-md-3">
+                <img src="../static/images/placeholder.png" class="img-fluid rounded"/>
+                <a href="https://www.linkedin.com/in/amandaly15/" target="_blank">Amanda Ly</a>
+                <ul>
+                    <li>SME, Model Building and Evaluation</li>
+                </ul>
+            </div>
+            <div id="actual-member" class="col-md-3">
+                <img src="../static/images/placeholder.png" class="img-fluid rounded"/>
+                <a href="https://www.linkedin.com/in/anstoniama/" target="_blank">Anstonia Ma</a>
+                <ul>
+                    <li>Lead Model Building and Evaluation</li>
+                </ul>
+            </div>
+            <div id="actual-member" class="col-md-3">
+                <img src="../static/images/placeholder.png" class="img-fluid rounded"/>
+                <a href="https://www.linkedin.com/in/huang-emily/" target="_blank">Emily Huang</a>
+                <ul>
+                    <li>Product Manager and Web Developer</li>
+                </ul>
+            </div>
+            <div id="actual-member" class="col-md-3">
+                <img src="../static/images/placeholder.png" class="img-fluid rounded"/>
+                <a href="https://www.linkedin.com/in/tajesvi-b-14b662178/" target="_blank">Tajesvi Bhat</a>
+                <ul>
+                    <li>Data Engineering and Visualizations</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
