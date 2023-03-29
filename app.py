@@ -7,10 +7,6 @@ app.debug = True
 def index():
     return render_template('index.html')
 
-# @app.route('/visualize')
-# def visualize():
-#     return render_template('visualize.html')
-
 @app.route('/predict')
 def predict():
     return render_template('predict.html')
