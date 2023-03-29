@@ -1,7 +1,26 @@
 {% extends 'base.html' %}
 
+<!-- TITLE -->
 {% block title %}Predict{% endblock %}
 
+<!-- HEAD SCRIPTS -->
+{% block head_script %} 
+{% endblock %}
+
+<!-- BODY OF CONTENT -->
 {% block content %}
-    <h1>this is predicting</h1>
+<div id="visualize-page">
+    <div id="filtering col-md-5">
+        <div>
+            <h1>Predicting!</h1>
+        </div>
+    </div>
+
+    <div id="graph">
+    </div>
+</div>
+{% endblock %}
+
+<!-- BODY SCRIPTS -->
+{% block body_script %}
 {% endblock %}
