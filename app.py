@@ -5,6 +5,7 @@ import json
 import pandas as pd
 import plotly
 import plotly.express as px
+import geopy as gpy
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
@@ -72,9 +73,63 @@ def graph(hour, dow, month, year, severe):
     # graphJSON = plotly.io.to_json(fig, engine='orjson')
     return graphJSON
 
-
-# PREDICTION FUNCTIONS
+#### PREDICTION PORTION
 @app.route('/predict')
 def predict():
     return render_template('predict.html')
 
+@app.route('/ready_inputs/getAddress', methods=['GET'])
+def verify_address():
+    return ready_input(request.args.get('address'))
+
+# test  2800 Turk Blvd, San Francisco, CA 94118
+# test 444 De Haro St, San Francisco, CA 94107 (discord)
+# test 185 Berry St, San Francisco, CA 94107 (lyft)
+# test 1515 3rd St, San Francisco, CA 94158 (uber)
+def ready_input(street):
+    response = {'msg': None, 'address': None, 'coord': None}
+
+    # attempt to try to convert the inputted address into a coordinate
+    try: 
+        geolocator = gpy.Nominatim(user_agent="keep_me_safe")
+        location = geolocator.geocode(street)
+
+        if "San Francisco" not in location.address :
+            response['msg'] = f'{location.address} is not in San Francisco. Try Again.'
+            response['address'] = create_graph(geolocator.geocode("1 Dr Carlton B Goodlett Pl"))
+            response['coord'] = None
+        else:
+            location_msg = str(location.address)
+            response['msg'] = location_msg
+            response['address'] = create_graph(location)
+            response['coord'] = str((location.latitude, location.longitude))
+    # if it fails, output a message for the user saying it's not correct
+    except:
+        location = geolocator.geocode("1 Dr Carlton B Goodlett Pl")
+
+        response['msg'] = "Invalid address... Is there a typo? Make sure this is a San Francisco address with no unit number!"
+        response['address'] = create_graph(geolocator.geocode("1 Dr Carlton B Goodlett Pl"))
+        response['coord'] = None
+
+    response_json = json.dumps(response)
+    return response_json
+    
+def create_graph(location):
+    inputted_point = pd.DataFrame({
+        'latitude' : [float(location.latitude)],
+        'longitude': [float(location.longitude)]
+    })
+
+    fig = px.scatter_mapbox(inputted_point, 
+                            lat="latitude", 
+                            lon="longitude", 
+                            mapbox_style='carto-positron',
+                            zoom=11.75, height=600, width=800)
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    fig.update_traces(marker={'size': 15, 
+                                'color': 'red',
+                            })
+
+    # Create a JSON representation of the graph
+    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return graphJSON

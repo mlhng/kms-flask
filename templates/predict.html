@@ -4,23 +4,126 @@
 {% block title %}Predict{% endblock %}
 
 <!-- HEAD SCRIPTS -->
-{% block head_script %} 
+{% block head_script %}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    async function get_address() {
+        // fetch the address
+        let address = document.getElementById('user-address').value;
+        // fetch the link related to the cb_viz which calls the flask function
+        let response = await fetch("/ready_inputs/getAddress?address=" + address);
+    
+        // if the call is sucessful
+        if (response.ok) {
+            let responseJson = await response.json();
+            if (response.ok) {
+                // var validate_json = Plotly.validate(chartJson.data, chartJson.layout);
+                console.log(responseJson);
+                
+                chartJson = JSON.parse(responseJson.address);
+                console.log(responseJson.msg);
+
+                plot_graph = document.getElementById('chart');
+                Plotly.newPlot(plot_graph, chartJson.data, chartJson.layout);
+                document.querySelector('#return-address').innerText = responseJson.msg;
+                document.querySelector('#return-coord').innerText = responseJson.coord;
+            } else { 
+                    alert("HTTP-Error: " + response.status + " on getResponse for Predict");
+                }
+        } else {
+            alert("HTTP-Error: " + response.status + " on getAddress");
+        }
+    }
+
+    function setTime() {
+        var oldTime;
+        var time = new Date().toLocaleTimeString('en-US', 
+            { hour12: false, hour: 'numeric', minute: 'numeric', second: 'numeric' });
+        if (oldTime === time) {
+            return;
+        }
+        oldTime = time;
+        time = time.split(':');
+        document.querySelector('#hours').innerText = time[0].padStart(2, "0");
+        document.querySelector('#minutes').innerText = time[1].padStart(2, "0");
+    }
+    setInterval(setTime, 500);
+
+    function setDate() {
+        const DAYS = [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+        ];
+
+        let currentDate = new Date();
+        let cDOW = currentDate.getDay().toString().padStart(2, "0");
+        let cDay = currentDate.getDate();
+        let cMonth = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+        let cYear = currentDate.getFullYear();
+
+        document.querySelector('#dow').innerText = DAYS[Number(cDOW)];
+        document.querySelector('#year').innerText = cYear;
+        document.querySelector('#month').innerText = cMonth;
+        document.querySelector('#day').innerText = cDay;
+    }
+    setInterval(setDate, 500);
+
+    window.onload = function() {
+        get_address();
+    };
+</script>
 {% endblock %}
 
 <!-- BODY OF CONTENT -->
 {% block content %}
-<div id="visualize-page">
-    <div id="filtering col-md-5">
-        <div>
-            <h1>Predicting!</h1>
-        </div>
-    </div>
+<div id="predict-page">
+    <h2>Are there accidents near you? Input your route!</h2>
+    <div class="row g-3" id="predict-section">
+        <div class="card col-md-4" id="user-info">
+            <div class="input-group mb-3" id="user-input">
+                <input type="text" class="form-control" id='user-address' value="1 Dr Carlton B Goodlett Pl" placeholder="Your address" aria-label="Your address" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="button" onclick="get_address()">Predict!</button>
+                </div>
+            </div>
 
-    <div id="graph">
+            <div id="relay-information">
+                <div class="mb-3" id="current-time">
+                    <p>Current Time: </p>
+                    <span id="hours"></span> 
+                    <span id="minutes"></span>
+                </div>
+    
+                <div class="mb-3" id="current-date">
+                    <p>Current Date: </p>
+                    <span id="dow"></span>
+                    <span id="year"></span>
+                    <span id="month"></span>
+                    <span id="day"></span> 
+                </div>
+    
+                <div class="mb-3" id="address-info">
+                    <p>Your address and coordinates:</p>
+                    <span id="return-address"></span>
+                    <span id="return-coord"></span>
+                </div>
+            </div>
+        </div>
+
+        <div id="chart" class="container-fluid col-md-8 chart"></div>
     </div>
 </div>
 {% endblock %}
 
 <!-- BODY SCRIPTS -->
 {% block body_script %}
+<script>get_address();</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+    crossorigin="anonymous"></script>
 {% endblock %}
