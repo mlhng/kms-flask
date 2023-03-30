@@ -1,26 +1,157 @@
 {% extends 'base.html' %}
 
-<!-- TITLE -->
 {% block title %}Visualize{% endblock %}
 
-<!-- HEAD SCRIPTS -->
-{% block head_script %} 
+{% block head_script %}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    async function filter_viz() {
+        // set all the variables
+        let hour = [];
+        const hour_btns = document.querySelectorAll('input[name="hour-select"]');
+        for (let i = 0; i < Number('{{hour_len}}'); i++){
+            var curr = document.getElementById('hour-select-'.concat(i.toString())).value;
+            if(hour_btns[i].checked){
+                hour.push(curr);
+            }
+        }
+        console.log(hour);
+
+        let dow = [];
+        let flask_dow = '{{dow_list}}'.slice(6,-6).split('&#39;, &#39;');
+        const dow_btns = document.querySelectorAll('input[name="dow-select"]');
+        for (let i = 0; i < Number('{{dow_len}}'); i++){
+            var curr = document.getElementById('dow-select-'.concat(flask_dow[i])).value;
+            if(dow_btns[i].checked){
+                dow.push(curr);
+            }
+        }
+        console.log(dow);
+
+        let month = [];
+        let flask_month = '{{month_list}}'.slice(6,-6).split('&#39;, &#39;');
+        const month_btns = document.querySelectorAll('input[name="month-select"]');
+        for (let i = 0; i < Number('{{month_len}}'); i++){
+            var curr = document.getElementById('month-select-'.concat(flask_month[i])).value;
+            if(month_btns[i].checked){
+                month.push(curr);
+            }
+        }
+        console.log(month);
+
+        let year = [];
+        const year_btns = document.querySelectorAll('input[name="year-select"]');
+        for (let i = 0; i < Number('{{year_len}}'); i++){
+            var curr = document.getElementById('year-select-'.concat((i + 2012).toString())).value;
+            if(year_btns[i].checked){
+                year.push(curr);
+            }
+        }
+        console.log(year);
+
+        let severe = [];
+        let flask_severe = '{{severe_list}}'.slice(6,-6).split('&#39;, &#39;');
+        const severe_btns = document.querySelectorAll('input[name="severe-select"]');
+        for (let i = 0; i < Number('{{severe_len}}'); i++){
+            var curr = flask_severe[i];
+            if(severe_btns[i].checked){
+                severe.push(curr);
+            }
+        }
+        console.log(severe);
+
+        // fetch the link related to the cb_viz which calls the flask function
+        let response = await fetch("/cb_viz/getAccidents?hour=" + hour + "&dow=" + dow + "&month=" + month + "&year=" + year + "&severe=" + severe);
+
+        // if the call is sucessful
+        if (response.ok) {
+            let chartJson = await response.json();
+            if (response.ok) {
+                console.log(chartJson);
+                // var validate_json = Plotly.validate(chartJson.data, chartJson.layout);
+                // console.log(validate_json);
+                plot_graph = document.getElementById('chart');
+                Plotly.newPlot(plot_graph, chartJson.data, chartJson.layout);
+            } else { 
+                    alert("HTTP-Error: " + response.status + " on getInfo");
+                }
+        } else {
+            alert("HTTP-Error: " + response.status + " on getAccidents");
+        }
+    } 
+
+    window.onload = function() {
+        filter_viz();
+    };
+</script>
+
 {% endblock %}
 
-<!-- BODY OF CONTENT -->
 {% block content %}
 <div id="visualize-page">
-    <div id="filtering col-md-5">
-        <div>
-            <h1>Visualizing!</h1>
-        </div>
-    </div>
+    <div class="row g-3" id="viz-section">
+        <div class="card col-md-4" id="filtering">
+            <div>
+                <h5>Choose how you view the data</h5>
+            </div>
+            <div class="justify-content-end">
+                <button class="btn btn-primary" type="button" onclick="filter_viz()">Map new!</button>
+            </div>
 
-    <div id="graph">
+            <div class="input-group" id="hour-select">
+                {% for i in range(hour_len) %}
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="hour-select-{{hour_list[i]}}" name='hour-select' value={{hour_list[i]}} checked>
+                        <label class="form-check-label" for="hour-select-{{hour_list[i]}}">{{hour_list[i]}}</label>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="input-group" id="dow-select">
+                {% for i in range(dow_len) %}
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="dow-select-{{dow_list[i]}}" name='dow-select' value={{dow_list[i]}} checked>
+                        <label class="form-check-label" for="dow-select-{{dow_list[i]}}">{{dow_list[i]}}</label>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="input-group" id="month-select">
+                {% for i in range(month_len) %}
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="month-select-{{month_list[i]}}" name='month-select' value={{month_list[i]}} checked>
+                        <label class="form-check-label" for="month-select-{{month_list[i]}}">{{month_list[i]}}</label>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="input-group" id="year-select">
+                {% for i in range(year_len) %}
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="year-select-{{year_list[i]}}" name='year-select' value={{year_list[i]}} checked>
+                        <label class="form-check-label" for="year-select-{{year_list[i]}}">{{year_list[i]}}</label>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="input-group" id="severe-select">
+                {% for i in range(severe_len) %}
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="severe-select-{{i}}" name='severe-select' value={{severe_list[i]}} checked>
+                        <label class="form-check-label" for="severe-select-{{i}}">{{severe_list[i]}}</label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="chart" class="container-fluid col-md-8 chart"></div>
     </div>
 </div>
 {% endblock %}
 
-<!-- BODY SCRIPTS -->
 {% block body_script %}
+<script>filter_viz();</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+    crossorigin="anonymous"></script>
 {% endblock %}
