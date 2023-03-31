@@ -16,8 +16,8 @@ month = ['January', 'February', 'March', 'April',
         'May', 'June', 'July', 'August',
         'September', 'October', 'November', 'December']
 year = [i for i in range(2012,2024)]
-col_severe = ['Injury (Complaint of Pain)', 'Injury (Other Visible)', 
-            'Injury (Severe)', 'Fatal']
+col_severe = ['Fatal', 'Injury (Severe)', 'Injury (Other Visible)', 
+            'Injury (Complaint of Pain)']
 
 # MAIN PAGE FUNCTIONS
 @app.route('/')
