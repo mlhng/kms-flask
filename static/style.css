@@ -198,27 +198,32 @@ p
 }
 
 /* VISUALIZEEEEE */
-#visualize-page 
+#visualize-page,
+#predict-page
 {
     margin: 8% auto 5% auto;
 }
 
-#visualize-page #viz-header
+#visualize-page #viz-header,
+#predict-page #predict-header
 {
     text-align: center;
 }
 
-#visualize-page #viz-header h1
+#visualize-page #viz-header h1,
+#predict-page #predict-header h1
 {
     margin: 0% auto;
 }
 
-#visualize-page #viz-header #blue-line 
+#visualize-page #viz-header #blue-line,
+#predict-page #predict-header #blue-line 
 {
     margin: 1% auto;
 }
 
-#visualize-page #viz-header p
+#visualize-page #viz-header p,
+#predict-page #predict-header p
 {
     margin-top: 0%;
 }
@@ -268,18 +273,19 @@ p
 }
 
 /* PREDICTING */
-#predict-page 
-{
-    margin: 10% auto 5% auto;
-}
-
 #predict-page #user-info 
 {
     padding: 2%;
 }
 
+#predict-page #predict-header
+{
+    text-align: center;
+}
+
 #predict-page #relay-information p
 {
+    color: #000;
     font-weight: bold;
 }
 

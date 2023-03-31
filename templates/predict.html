@@ -82,9 +82,14 @@
 <!-- BODY OF CONTENT -->
 {% block content %}
 <div id="predict-page">
-    <h2>Are there accidents near you? Input your route!</h2>
+    <div class="row g-3 align-self-center" id="predict-header">
+        <h3>Our Model</h3>
+        <h1>Predict future traffic accident hotspots!</h1>
+        <div id="blue-line"></div>
+        <p>Use our model to help look into the future and highlight potential traffic accident hotspots on your route!</p>
+    </div>
     <div class="row g-3" id="predict-section">
-        <div class="card col-md-4" id="user-info">
+        <div class="card col-lg-4 col-md-auto" id="user-info">
             <div class="input-group mb-3" id="user-input">
                 <input type="text" class="form-control" id='user-address' value="1 Dr Carlton B Goodlett Pl" placeholder="Your address" aria-label="Your address" aria-describedby="basic-addon2">
                 <div class="input-group-append">
@@ -115,7 +120,7 @@
             </div>
         </div>
 
-        <div id="chart" class="container-fluid col-md-8 chart"></div>
+        <div id="chart" class="container-fluid col-lg-8 col-md-12 col-sm-12 chart"></div>
     </div>
 </div>
 {% endblock %}
