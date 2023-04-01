@@ -61,10 +61,12 @@ def graph(hour, dow, month, year, severe):
             & df['accident_year'].isin(year_list) 
             & df['collision_severity'].isin(severe_list)]
 
-    fig = px.scatter_mapbox(df, lat="tb_latitude", lon="tb_longitude", color="collision_severity", 
+    fig = px.scatter_mapbox(df, lat="tb_latitude", lon="tb_longitude", 
+                            color="collision_severity", 
                             color_continuous_scale=px.colors.cyclical.IceFire,
-                            hover_name='primary_rd', hover_data=['collision_time','accident_year','month','day_of_week'],
-                            zoom=11.5, height=650, width=875)
+                            hover_name='primary_rd', 
+                            hover_data=['collision_time','accident_year','month','day_of_week'],
+                            zoom=11.5)
     fig.update_layout(mapbox_style="open-street-map")
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     fig.update_layout(legend=dict(
@@ -130,12 +132,12 @@ def create_graph(location):
                             lat="latitude", 
                             lon="longitude", 
                             mapbox_style='carto-positron',
-                            zoom=11.5, height=650, width=875)
+                            zoom=11.5)
     fig.update_layout(mapbox_style="open-street-map")
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     fig.update_traces(marker={'size': 15, 
-                                'color': 'red',
-                            })
+                            'color': 'red',
+                        })
 
     # Create a JSON representation of the graph
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)

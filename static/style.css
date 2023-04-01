@@ -31,9 +31,10 @@ nav a:hover, nav a:active
 
 @media (max-width: 991px)
 {
-    #visualize-page
+    #visualize-page,
+    #predict-page
     {
-        padding-top: 10% !important;
+        padding-top: 10vh !important;
     }
 
     #home-page #intro, 
@@ -41,7 +42,31 @@ nav a:hover, nav a:active
     #home-page #resources, 
     #home-page #team
     {
-        padding-top: 15% !important;
+        padding-top: 15vh !important;
+    }
+}
+
+@media (max-width: 507px)
+{
+    #predict-page h1
+    {
+        padding-bottom: 2.5%;
+    }
+}
+
+@media (min-width: 508px)
+{
+    #viz-section
+    {
+        min-height: 85vh;
+    }
+}
+
+@media (min-width: 992px)
+{
+    #predict-section
+    {
+        min-height: 85vh;
     }
 }
 
@@ -148,7 +173,7 @@ p
 #home-page #resource-links ul li
 {
     list-style-type: none;
-    font-size: 1em;
+    font-size: 1.25em;
 }
 
 #home-page #resource-links h4
@@ -266,12 +291,6 @@ p
     margin: 3% auto;
 }
 
-#visualize-page #graph 
-{
-    width: 100%;
-    height: 100%;
-}
-
 /* PREDICTING */
 #predict-page #user-info 
 {
@@ -304,6 +323,7 @@ p
 {
     display: block;
 }
+
 
 /*  FOOTERRRR */
 footer

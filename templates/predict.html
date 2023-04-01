@@ -17,14 +17,13 @@
         if (response.ok) {
             let responseJson = await response.json();
             if (response.ok) {
-                // var validate_json = Plotly.validate(chartJson.data, chartJson.layout);
-                console.log(responseJson);
-                
+                // convert address json to actual json to use to plot
                 chartJson = JSON.parse(responseJson.address);
-                console.log(responseJson.msg);
-
                 plot_graph = document.getElementById('chart');
                 Plotly.newPlot(plot_graph, chartJson.data, chartJson.layout);
+
+                // inject message from the app. message should be like the address
+                // or the address isnt right is the user didnt do it right
                 document.querySelector('#return-address').innerText = responseJson.msg;
                 document.querySelector('#return-coord').innerText = responseJson.coord;
             } else { 
@@ -76,6 +75,10 @@
     window.onload = function() {
         get_address();
     };
+
+    window.onresize = function() {
+        get_address();
+    }
 </script>
 {% endblock %}
 
@@ -83,13 +86,13 @@
 {% block content %}
 <div id="predict-page">
     <div class="row g-3 align-self-center" id="predict-header">
-        <h3>Our Model</h3>
-        <h1>Predict future traffic accident hotspots!</h1>
+        <h3>Our ML Model</h3>
+        <h1>Predict traffic accident hotspots!</h1>
         <div id="blue-line"></div>
         <p>Use our model to help look into the future and highlight potential traffic accident hotspots on your route!</p>
     </div>
     <div class="row g-3" id="predict-section">
-        <div class="card col-lg-4 col-md-auto" id="user-info">
+        <div class="card col-lg-4 flex-grow-1" id="user-info">
             <div class="input-group mb-3" id="user-input">
                 <input type="text" class="form-control" id='user-address' value="1 Dr Carlton B Goodlett Pl" placeholder="Your address" aria-label="Your address" aria-describedby="basic-addon2">
                 <div class="input-group-append">
@@ -120,7 +123,7 @@
             </div>
         </div>
 
-        <div id="chart" class="container-fluid col-lg-8 col-md-12 col-sm-12 chart"></div>
+        <div id="chart" class="container-fluid col-lg-8 col-12 chart"></div>
     </div>
 </div>
 {% endblock %}

@@ -109,7 +109,7 @@
                     <div id="collapseHour" class="accordion-collapse collapse show" aria-labelledby="hour-header" data-bs-parent="#filter-options">
                         <div class="input-group" id="hour-select">
                             {% for i in range(hour_len) %}
-                                <div class="form-check form-check-inline col-lg-1 col-md-1 col-sm-1">
+                                <div class="form-check form-check-inline col-lg-1 col-md-1 col-sm-1 col-1">
                                     <input class="form-check-input" type="checkbox" id="hour-select-{{hour_list[i]}}" name='hour-select' value={{hour_list[i]}} checked>
                                     <label class="form-check-label" for="hour-select-{{hour_list[i]}}">{{hour_list[i]}}</label>
                                 </div>
@@ -127,7 +127,7 @@
                     <div id="collapseDOW" class="accordion-collapse collapse" aria-labelledby="dow-header" data-bs-parent="#filter-options">
                         <div class="input-group" id="dow-select">
                             {% for i in range(dow_len) %}
-                                <div class="form-check form-check-inline col-lg-4 col-md-2 col-sm-3">
+                                <div class="form-check form-check-inline col-lg-4 col-md-2 col-sm-3 col-4">
                                     <input class="form-check-input" type="checkbox" id="dow-select-{{dow_list[i]}}" name='dow-select' value={{dow_list[i]}} checked>
                                     <label class="form-check-label" for="dow-select-{{dow_list[i]}}">{{dow_list[i]}}</label>
                                 </div>
@@ -145,7 +145,7 @@
                     <div id="collapseMonth" class="accordion-collapse collapse" aria-labelledby="month-header" data-bs-parent="#filter-options">
                         <div class="input-group" id="month-select">
                             {% for i in range(month_len) %}
-                                <div class="form-check form-check-inline col-lg-3 col-md-2 col-sm-3">
+                                <div class="form-check form-check-inline col-lg-3 col-md-2 col-sm-3 col-4">
                                     <input class="form-check-input" type="checkbox" id="month-select-{{month_list[i]}}" name='month-select' value={{month_list[i]}} checked>
                                     <label class="form-check-label" for="month-select-{{month_list[i]}}">{{month_list[i]}}</label>
                                 </div>
@@ -163,7 +163,7 @@
                     <div id="collapseYear" class="accordion-collapse collapse" aria-labelledby="year-header" data-bs-parent="#filter-options">
                         <div class="input-group" id="year-select">
                             {% for i in range(year_len) %}
-                                <div class="form-check form-check-inline col-lg-3 col-md-2 col-sm-2">
+                                <div class="form-check form-check-inline col-lg-3 col-md-2 col-sm-2 col-4">
                                     <input class="form-check-input" type="checkbox" id="year-select-{{year_list[i]}}" name='year-select' value={{year_list[i]}} checked>
                                     <label class="form-check-label" for="year-select-{{year_list[i]}}">{{year_list[i]}}</label>
                                 </div>
@@ -181,7 +181,7 @@
                     <div id="collapseSev" class="accordion-collapse collapse" aria-labelledby="severe-header" data-bs-parent="#filter-options">
                         <div class="input-group" id="severe-select">
                             {% for i in range(severe_len) %}
-                                <div class="form-check form-check-inline d-block">
+                                <div class="form-check form-check-inline d-block col-12">
                                     <input class="form-check-input" type="checkbox" id="severe-select-{{i}}" name='severe-select' value={{severe_list[i]}} checked>
                                     <label class="form-check-label" for="severe-select-{{i}}">{{severe_list[i]}}</label>
                                 </div>
@@ -196,7 +196,7 @@
             </div>
         </div>
 
-        <div id="chart" class="container-fluid col-lg-8 col-md-12 col-sm-12 chart"></div>
+        <div id="chart" class="container-fluid col-lg-8 col-12 chart"></div>
     </div>
 </div>
 {% endblock %}
