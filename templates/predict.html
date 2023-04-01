@@ -76,9 +76,16 @@
         get_address();
     };
 
+    // these variables before the resize function hopefully stops multiple reloads
+    var res;
     window.onresize = function() {
-        get_address();
+        // if (res){clearTimeout(res)};
+        // res = setTimeout(get_address,100);
+
+        if (res){clearTimeout(res)};
+        res = setTimeout(get_address,50);
     }
+    
 </script>
 {% endblock %}
 
