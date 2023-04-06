@@ -7,13 +7,15 @@ import plotly
 import plotly.express as px
 
 # for prediction
-import numpy as np
 import requests
 import datetime
+import numpy as np
 import itertools
 import joblib
-from datetime import datetime
+import numpy as np
+import pandas as pd
 import plotly.graph_objects as go
+from datetime import datetime
 
 configs = {'googlekey' :"AIzaSyB0MG9PRhLJcoVAeyxSbB3rtknrBvazWw4"}
 model = joblib.load('static/xgboost.pkl')
@@ -204,9 +206,9 @@ def calc_distance(accident_dataset, lats, longs, google_count_lat_long):
     # load all cluster accident waypoints to check against proximity
     accident_point_counts = len(accident_dataset.index)
 
-    # approximate radius of earth in km
+   # approximate radius of earth in km
     R = 6373.0
-    new = accident_dataset.append([accident_dataset] * (google_count_lat_long - 1), ignore_index=True)  # repeat data frame (9746*waypoints_count) times
+    new = accident_dataset._append([accident_dataset] * (google_count_lat_long - 1), ignore_index=True)  # repeat data frame (9746*waypoints_count) times
     lats_r = list(
         itertools.chain.from_iterable(itertools.repeat(x, accident_point_counts) for x in lats))  # repeat 9746 times
     longs_r = list(itertools.chain.from_iterable(itertools.repeat(x, accident_point_counts) for x in longs))
