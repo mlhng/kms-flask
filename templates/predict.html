@@ -9,9 +9,10 @@
 <script>
     async function get_address() {
         // fetch the address
-        let address = document.getElementById('user-address').value;
+        let addr1 = document.getElementById('user-start').value;
+        let addr2 = document.getElementById('user-end').value;
         // fetch the link related to the cb_viz which calls the flask function
-        let response = await fetch("/ready_inputs/getAddress?address=" + address);
+        let response = await fetch("/route_predict/getRoute?addr1=" + addr1 + "&addr2=" + addr2);
     
         // if the call is sucessful
         if (response.ok) {
@@ -30,7 +31,7 @@
                     alert("HTTP-Error: " + response.status + " on getResponse for Predict");
                 }
         } else {
-            alert("HTTP-Error: " + response.status + " on getAddress");
+            alert("HTTP-Error: " + response.status + " on getRoute");
         }
     }
 
@@ -85,7 +86,7 @@
         if (res){clearTimeout(res)};
         res = setTimeout(get_address,50);
     }
-    
+
 </script>
 {% endblock %}
 
@@ -98,13 +99,27 @@
         <div id="blue-line"></div>
         <p>Use our model to help look into the future and highlight potential traffic accident hotspots on your route!</p>
     </div>
+    
     <div class="row g-3" id="predict-section">
         <div class="card col-lg-4 flex-grow-1" id="user-info">
-            <div class="input-group mb-3" id="user-input">
-                <input type="text" class="form-control" id='user-address' value="1 Dr Carlton B Goodlett Pl" placeholder="Your address" aria-label="Your address" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                  <button class="btn btn-primary" type="button" onclick="get_address()">Predict!</button>
+            <h2>Enter your route</h2>
+
+            <div class="route-submission">
+                <div id="user-input" class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Start Address</span>
+                    </div>
+                    <input type="text" class="form-control" id="user-start" value="121 Spear Street" aria-describedby="user starting location" placeholder="Your starting location">
                 </div>
+    
+                <div id="user-input" class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">End Address</span>
+                    </div>
+                    <input type="text" class="form-control" id="user-end" value="Powell Street BART" placeholder="Your ending location">
+                </div>
+
+                <button type="submit" class="btn btn-primary" onclick="get_address()">Submit</button>
             </div>
 
             <div id="relay-information">

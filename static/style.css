@@ -1,113 +1,64 @@
 /* OVERALL WEBSITE */
-html body
-{
+html body {
     font-family: 'Poppins', serif;
 }
 
 /* NAVIGVATION BAR */
-nav
-{
+nav {
     background-color: #fff;
     position: absolute;
 }
 
-nav #logo
-{
+nav #logo {
     width: 100%;
     height: auto;
     max-width: 250px;
     margin-left: 25px;
 }
 
-nav a:link, nav a:visited
-{
+nav a:link,
+nav a:visited {
     color: #000;
 }
 
-nav a:hover, nav a:active
-{
+nav a:hover,
+nav a:active {
     color: #0101c5;
-}
-
-@media (max-width: 991px)
-{
-    #visualize-page,
-    #predict-page
-    {
-        padding-top: 10vh !important;
-    }
-
-    #home-page #intro, 
-    #home-page #motivation, 
-    #home-page #resources, 
-    #home-page #team
-    {
-        padding-top: 15vh !important;
-    }
-}
-
-@media (max-width: 507px)
-{
-    #predict-page h1
-    {
-        padding-bottom: 2.5%;
-    }
-}
-
-@media (min-width: 508px)
-{
-    #viz-section
-    {
-        min-height: 85vh;
-    }
-}
-
-@media (min-width: 992px)
-{
-    #predict-section
-    {
-        min-height: 85vh;
-    }
 }
 
 /* INDEX PAGE */
 
 /* OVERALL FORMATTING */
-h1
-{
+h1 {
     color: #000000;
     font-family: 'Merriweather' 'sans-serif';
     font-size: 3em;
-    font-weight: bold;  
+    font-weight: bold;
     line-height: 1em;
 }
 
-h2
-{
+h2 {
     color: #000000;
     font-family: 'Merriweather' 'sans-serif';
     font-size: 2.5em;
-    font-weight: bold;  
+    font-weight: bold;
     line-height: 1em;
 }
 
-h3
-{
+h3 {
     color: #0101c5;
     font-size: 1em;
     text-transform: uppercase;
-    font-weight: bold;  
+    font-weight: bold;
 }
 
-p
-{
+p {
     font-size: 1em;
     line-height: 2em;
     color: #C3C3C3;
 }
 
-#blue-line
-{
+#blue-line {
     width: 50px;
     height: 2px;
     background-color: #0101c5;
@@ -115,221 +66,246 @@ p
 }
 
 /* HOME FORMATTING */
-#home-page
-{
+#home-page {
     margin-top: 10%;
 }
 
-#home-page #intro-text, 
-#home-page #motive-text, 
-#home-page #resources-text
-{
-    margin: auto; 
+#home-page #intro-text,
+#home-page #motive-text,
+#home-page #resources-text {
+    margin: auto;
 }
 
-#home-page #intro, 
-#home-page #motivation, 
-#home-page #resources, 
-#home-page #team
-{
+#home-page #intro,
+#home-page #motivation,
+#home-page #resources,
+#home-page #team {
     margin: 5% auto;
     padding-top: 70px;
 }
 
 /* TEAM TEXT FOR CENTERING IN THE MIDDLE */
-#home-page #team-text 
-{
+#home-page #team-text {
     text-align: center;
     margin-bottom: 2.5%;
 }
 
 /* BLUE LINE FOR TEAM TEXT SPECIFICALLY */
-#home-page #team-text #blue-line 
-{
+#home-page #team-text #blue-line {
     margin: 1% auto;
 }
 
 /* RESOURCE LINKS DISPLAY */
-#home-page #resource-links div
-{
+#home-page #resource-links div {
     margin: 2.5% 0%;
     text-align: center;
 }
 
 #home-page #resource-links ul,
-#home-page #resource-links a
-{
+#home-page #resource-links a {
     padding: 0;
     text-decoration: none;
 }
 
-#home-page #resource-links a:hover, 
-#home-page #resource-links a:active
-{
+#home-page #resource-links a:hover,
+#home-page #resource-links a:active {
     color: #0101c5;
     text-decoration: none;
 }
 
-#home-page #resource-links ul li
-{
+#home-page #resource-links ul li {
     list-style-type: none;
     font-size: 1.25em;
 }
 
-#home-page #resource-links h4
-{
+#home-page #resource-links h4 {
     font-size: 2em;
 }
 
 /* TEAM MEMBER FORMATTING */
-#home-page #team-members
-{
+#home-page #team-members {
     text-align: center;
 }
 
-#home-page #team-members a
-{
+#home-page #team-members a {
     font-size: 2em;
     font-weight: bold;
     text-decoration: none;
 }
 
 #home-page #team-members a:link,
-#home-page #team-members a:visited
-{
+#home-page #team-members a:visited {
     color: #000;
 }
 
-#home-page #team-members a:hover, 
-#home-page #team-members a:active
-{
+#home-page #team-members a:hover,
+#home-page #team-members a:active {
     color: #0101c5;
     text-decoration: none;
 }
 
-#home-page #team-members #member-pic
-{
+#home-page #team-members #member-pic {
     margin: auto;
 }
 
-#home-page #team-members ul
-{
+#home-page #team-members ul {
     padding: 0;
 }
 
-#home-page #team-members ul li
-{
+#home-page #team-members ul li {
     list-style-type: none;
 }
 
 /* VISUALIZEEEEE */
 #visualize-page,
-#predict-page
-{
+#predict-page {
     margin: 8% auto 5% auto;
 }
 
 #visualize-page #viz-header,
-#predict-page #predict-header
-{
+#predict-page #predict-header {
     text-align: center;
 }
 
 #visualize-page #viz-header h1,
-#predict-page #predict-header h1
-{
+#predict-page #predict-header h1 {
     margin: 0% auto;
 }
 
 #visualize-page #viz-header #blue-line,
-#predict-page #predict-header #blue-line 
-{
+#predict-page #predict-header #blue-line {
     margin: 1% auto;
 }
 
 #visualize-page #viz-header p,
-#predict-page #predict-header p
-{
+#predict-page #predict-header p {
     margin-top: 0%;
 }
 
-#visualize-page #filtering 
-{
+#visualize-page #filtering {
     padding: 2%;
 }
 
-#visualize-page #filter-header
-{
+#visualize-page #filter-header {
     padding-bottom: 2%;
     text-align: center;
 }
 
-#visualize-page #filtering .input-group
-{
+#visualize-page #filtering .input-group {
     margin: 1%;
 }
 
 #visualize-page #collapseHour,
-#visualize-page #collapseMonth
-{
+#visualize-page #collapseMonth {
     padding: 1%;
 }
 
-#visualize-page #collapseDOW
-{
+#visualize-page #collapseDOW {
     padding: 2%;
 }
 
 #visualize-page #collapseYear,
-#visualize-page #collapseSev
-{
+#visualize-page #collapseSev {
     padding: 3%;
 }
 
-#visualize-page #viz-button
-{
+#visualize-page #viz-button {
     margin: 3% auto;
 }
 
 /* PREDICTING */
-#predict-page #user-info 
-{
+#predict-page #user-info {
     padding: 2%;
 }
 
-#predict-page #predict-header
-{
+#predict-page #predict-header {
     text-align: center;
 }
 
-#predict-page #relay-information p
-{
+#predict-page #user-info p,
+#predict-page #relay-information p {
     color: #000;
     font-weight: bold;
 }
 
+#predict-page #user-info p {
+    margin-bottom: 0%;
+    font-size: 1.1em;
+}
+
 #predict-page #current-time p,
-#predict-page #current-date p 
-{
+#predict-page #current-date p {
     display: inline;
 }
 
-#predict-page #address-info p
-{
+#predict-page #address-info p {
     margin-bottom: 0;
 }
 
-#predict-page #return-coord
-{
+#predict-page #return-coord {
     display: block;
 }
 
+.route-submission button
+{
+    width: 100%;
+}
+
+.route-submission
+{
+    margin-bottom: 1rem;
+}
+
+.input-group-prepend
+{
+    width: 35%;
+}
+
+#user-info h2
+{
+    margin:0 auto 1rem auto;
+    font-size: 1.5rem;
+}
 
 /*  FOOTERRRR */
-footer
-{
+footer {
     font-size: 0.75em;
-    text-align: center; 
-    margin-bottom: .75%; 
+    text-align: center;
+    margin-bottom: .75%;
     color: #C3C3C3;
+}
+
+/* MEDIA QUERIES */
+
+@media (max-width: 991px) {
+
+    #visualize-page,
+    #predict-page {
+        padding-top: 10vh !important;
+    }
+
+    #home-page #intro,
+    #home-page #motivation,
+    #home-page #resources,
+    #home-page #team {
+        padding-top: 15vh !important;
+    }
+}
+
+@media (max-width: 507px) {
+    #predict-page h1 {
+        padding-bottom: 2.5%;
+    }
+}
+
+@media (min-width: 508px) {
+    #viz-section {
+        min-height: 85vh;
+    }
+}
+
+@media (min-width: 992px) {
+    #predict-section {
+        min-height: 85vh;
+    }
 }
