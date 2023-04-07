@@ -26,7 +26,9 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 
 # variables for the filtering data viz portion
 hour = [i for i in range(0,24)]
+minute = [i for i in range(0,60)]
 dow = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+day = [i for i in range(1,32)]
 month = ['January', 'February', 'March', 'April', 
         'May', 'June', 'July', 'August',
         'September', 'October', 'November', 'December']
@@ -94,7 +96,7 @@ def graph(hour, dow, month, year, severe):
                             hover_name='primary_rd', 
                             hover_data=['collision_time','accident_year','month','day_of_week'],
                             zoom=11.5)
-    fig.update_layout(mapbox_style="open-street-map")
+    fig.update_layout(mapbox_style="stamen-terrain")
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     fig.update_layout(legend=dict(
         yanchor="top",
@@ -115,16 +117,23 @@ def graph(hour, dow, month, year, severe):
 # test 1515 3rd St, San Francisco, CA 94158 (uber)
 @app.route('/predict')
 def predict():
-    return render_template('predict.html')
+    return render_template('predict.html', 
+                           min_len = len(minute), min_list = minute,
+                           hour_len = len(hour), hour_list=hour,
+                           dow_len = len(dow), dow_list=dow,
+                           day_len = len(day), day_list = day,
+                           month_len = len(month), month_list=month,
+                           year_len = len(year), year_list=year)
 
 @app.route('/route_predict/getRoute', methods=['GET'])
 def route_predict(): 
     # get the two routes from the user here
     route_dict = request.args.to_dict()
     return verify_route(route_dict['addr1'],
-                        route_dict['addr2'])
+                        route_dict['addr2'],
+                        route_dict['user_datetime'])
 
-def verify_route(origin, destination):
+def verify_route(origin, destination, user_dt):
     response = {'msg': None, 'address': None, 'coord': None}
     parameters = {'origin': origin, 'destination': destination, 'key': configs['googlekey'], 'mode': 'walking'}
     
@@ -137,7 +146,7 @@ def verify_route(origin, destination):
 
     if route_json['status'] == 'OK':
         if 'San Francisco' in route_json['routes'][0]['legs'][0]['start_address'] and 'San Francisco' in route_json['routes'][0]['legs'][0]['end_address']:
-            did_accident_happen, graphJson = model_time(route_json, datetime.now())
+            did_accident_happen, graphJson = model_time(route_json, user_dt)
             if did_accident_happen:
                 response['msg'] = 'Accidents have been predicted!'
                 response['address'] = graphJson
@@ -167,9 +176,8 @@ def create_graph(location):
     fig = px.scatter_mapbox(inputted_point, 
                             lat="latitude", 
                             lon="longitude", 
-                            mapbox_style='carto-positron',
-                            zoom=13)
-    fig.update_layout(mapbox_style="open-street-map")
+                            mapbox_style='stamen-terrain',
+                            zoom=12)
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     fig.update_traces(marker={'size': 15, 
                             'color': 'red',
@@ -280,7 +288,7 @@ def model_graph(lats, longs, accident_output):
         mapbox = {
             'center': {'lon': longs[0], 'lat': lats[0]},
             'style': "stamen-terrain",
-            'zoom': 16})
+            'zoom': 14})
 
     fig.update_layout(legend=dict(
             yanchor="top",
@@ -296,7 +304,7 @@ def model_graph(lats, longs, accident_output):
 # MAIN MODEL PREDICTION
 def model_time(route_json, tm):
     #parse time
-    datetime_object = datetime.strptime(str(tm), '%Y-%m-%d %H:%M:%S.%f')
+    datetime_object = datetime.strptime(str(tm), '%Y/%b/%d %H:%M:%S')
 
     # get route planning
     lats, longs, google_count_lat_long = collect_coords(route_json)

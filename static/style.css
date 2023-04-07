@@ -216,26 +216,58 @@ p {
 /* PREDICTING */
 #predict-page #user-info {
     padding: 2%;
+    margin-top: 0rem;
+}
+
+#user-input
+{
+    margin-bottom: .5rem;
 }
 
 #predict-page #predict-header {
     text-align: center;
 }
 
-#predict-page #user-info p,
+#predict-page h2
+{
+    margin: 0 auto .5rem auto;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+#predict-page .predict-instructions
+{
+    line-height: normal;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+    font-size: .9rem;
+    text-align: center;
+}
+
+.route-submission
+{
+    margin-top: .75rem;
+}
+
+#predict-page .datetime-input p,
 #predict-page #relay-information p {
     color: #000;
     font-weight: bold;
 }
 
-#predict-page #user-info p {
-    margin-bottom: 0%;
-    font-size: 1.1em;
-}
-
 #predict-page #current-time p,
 #predict-page #current-date p {
     display: inline;
+}
+
+#predict-page .datetime-input .form-check
+{
+    margin-bottom: 1rem;
+}
+
+#predict-page .datetime-input .form-check input
+{
+    margin-top: .5rem;
 }
 
 #predict-page #address-info p {
@@ -246,13 +278,9 @@ p {
     display: block;
 }
 
-.route-submission button
+#user-info button
 {
     width: 100%;
-}
-
-.route-submission
-{
     margin-bottom: 1rem;
 }
 
@@ -261,10 +289,56 @@ p {
     width: 35%;
 }
 
-#user-info h2
+#predict-page div#current-time 
 {
-    margin:0 auto 1rem auto;
-    font-size: 1.5rem;
+    margin-bottom: 0 !important;
+}
+
+.current-datetime,
+.set-datetime
+{
+    display: flex;
+    flex-direction: column;
+}
+
+#current-time,
+#current-date,
+.time-dropdown,
+.pick-time,
+.date-dropdown,
+.pick-date
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.time-dropdown p,
+.date-dropdown p
+{
+    margin-right: .25rem;
+}
+
+.pick-time,
+.pick-date
+{
+    height: 2rem;
+}
+
+.user-time,
+.user-date
+{
+    margin-top: .25rem;
+    margin-left: .25rem;
+}
+
+#relay-information
+{
+    text-align: center;
+}
+
+.form-check
+{
+    margin-bottom: 1rem;
 }
 
 /*  FOOTERRRR */
@@ -289,6 +363,18 @@ footer {
     #home-page #resources,
     #home-page #team {
         padding-top: 15vh !important;
+    }
+
+    .current-datetime,
+    .set-datetime
+    {
+        flex-direction: row;
+    }
+
+    #current-time,
+    .pick-time
+    {
+        width: 50%;
     }
 }
 

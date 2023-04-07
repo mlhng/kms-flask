@@ -5,14 +5,53 @@
 
 <!-- HEAD SCRIPTS -->
 {% block head_script %}
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
 <script>
     async function get_address() {
+        let monthDictionary = {
+            'January': 0, 
+            'February': 1, 
+            'March': 2, 
+            'April': 3, 
+            'May': 4, 
+            'June': 5, 
+            'July': 6, 
+            'August': 7,
+            'September': 8, 
+            'October': 9, 
+            'November': 10, 
+            'December': 11
+        }
+
         // fetch the address
         let addr1 = document.getElementById('user-start').value;
         let addr2 = document.getElementById('user-end').value;
+        let get_date = new Date(Date.now()).toString();
+
+        // fetch the datetime
+        if(document.getElementById('set-datetime-radio').checked)
+        {
+            let hour = Number(document.getElementById('predict-hour').value);
+            let minute = Number(document.getElementById('predict-minute').value);
+            let day = Number(document.getElementById('predict-day').value);
+            let month = document.getElementById('predict-month').value;
+
+            get_date = new Date(2023, monthDictionary[month], day, hour, minute).toString();
+        }
+
+        // split the date to ready for model
+        get_date = get_date.split(" ");
+        // if user submits invalid date, go check
+        if(get_date.includes("Invalid"))
+        {
+            alert("Invalid date and/or time! Please check your input before submitting.");
+            return;
+        }
+
+        let user_date = get_date[3] + "/" + get_date[1] + "/" + get_date[2] + " " + get_date[4];
+
         // fetch the link related to the cb_viz which calls the flask function
-        let response = await fetch("/route_predict/getRoute?addr1=" + addr1 + "&addr2=" + addr2);
+        let response = await fetch("/route_predict/getRoute?addr1=" + addr1 + "&addr2=" + addr2 + "&user_datetime=" + user_date);
     
         // if the call is sucessful
         if (response.ok) {
@@ -62,7 +101,7 @@
 
         let currentDate = new Date();
         let cDOW = currentDate.getDay().toString().padStart(2, "0");
-        let cDay = currentDate.getDate();
+        let cDay = currentDate.getDate().toString().padStart(2, "0");
         let cMonth = (currentDate.getMonth() + 1).toString().padStart(2, "0");
         let cYear = currentDate.getFullYear();
 
@@ -103,9 +142,10 @@
     <div class="row g-3" id="predict-section">
         <div class="card col-lg-4 flex-grow-1" id="user-info">
             <h2>Enter your route</h2>
-
+            <p class="predict-instructions">Input the start and end address for your route. Make sure these addresses are both in San Francisco.</p>
+            <!-- route stuff -->
             <div class="route-submission">
-                <div id="user-input" class="input-group mb-3">
+                <div id="user-input" class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">Start Address</span>
                     </div>
@@ -118,27 +158,84 @@
                     </div>
                     <input type="text" class="form-control" id="user-end" value="Powell Street BART" placeholder="Your ending location">
                 </div>
-
-                <button type="submit" class="btn btn-primary" onclick="get_address()">Submit</button>
             </div>
 
+            <!-- datetime select -->
+            <h2>Select the date and time</h2>
+            <p class="predict-instructions">Select either the current or a future date and time.</p>
+            <div class="datetime-input">
+                <div class="form-check">
+                    <input class="form-check-input" name="datetime-select" type="radio" id="current-datetime-radio" checked>
+                    <label class="form-check-label current-datetime" for="current-datetime-radio">
+                        <div id="current-time">
+                            <p>Current Time: </p>
+                            <div class="user-time">
+                                <span id="hours"></span>
+                                <span id="minutes"></span>
+                            </div>
+                        </div>
+            
+                        <div id="current-date">
+                            <p>Current Date: </p>
+                            <div class="user-date">
+                                <span id="dow"></span>
+                                <span id="year"></span>
+                                <span id="month"></span>
+                                <span id="day"></span> 
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" name="datetime-select" type="radio" id="set-datetime-radio">
+                    <label class="form-check-label set-datetime" for="set-datetime-radio">
+                        <div class="time-dropdown">
+                            <p>Time:</p>
+                            <div class="pick-time">
+                                <select id="predict-hour" class="form-select" aria-label="Default select example">
+                                    <option selected>Hr</option>
+                                    {% for i in range(hour_len) %}
+                                        <option value={{hour_list[i]}}>{{hour_list[i]}}</option>
+                                    {% endfor %}
+                                </select>
+    
+                                <select id="predict-minute" class="form-select" aria-label="Default select example">
+                                    <option selected>Min</option>
+                                    {% for i in range(min_len) %}
+                                        <option value={{min_list[i]}}>{{min_list[i]}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="date-dropdown">
+                            <p>Date:</p>
+                            <div class="pick-date">
+                                <select id="predict-month" class="form-select" aria-label="Default select example">
+                                    <option selected>M</option>
+                                    {% for i in range(month_len) %}
+                                        <option value={{month_list[i]}}>{{month_list[i]}}</option>
+                                    {% endfor %}
+                                </select>
+    
+                                <select id="predict-day" class="form-select" aria-label="Default select example">
+                                    <option selected>D</option>
+                                    {% for i in range(day_len) %}
+                                        <option value={{day_list[i]}}>{{day_list[i]}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </label>
+                  </div>
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="get_address()">Submit</button>
+
+            <!-- results section -->
             <div id="relay-information">
-                <div class="mb-3" id="current-time">
-                    <p>Current Time: </p>
-                    <span id="hours"></span> 
-                    <span id="minutes"></span>
-                </div>
-    
-                <div class="mb-3" id="current-date">
-                    <p>Current Date: </p>
-                    <span id="dow"></span>
-                    <span id="year"></span>
-                    <span id="month"></span>
-                    <span id="day"></span> 
-                </div>
-    
                 <div class="mb-3" id="address-info">
-                    <p>Your address and coordinates:</p>
+                    <h2>Prediction Results</h2>
                     <span id="return-address"></span>
                     <span id="return-coord"></span>
                 </div>
@@ -153,7 +250,4 @@
 <!-- BODY SCRIPTS -->
 {% block body_script %}
 <script>get_address();</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
-    crossorigin="anonymous"></script>
 {% endblock %}
