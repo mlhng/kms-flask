@@ -73,6 +73,7 @@ def cb_viz():
                 graph_filter['year'],
                 graph_filter['severe'])
 
+
 def graph(hour, dow, month, year, severe):
     hour_list = [int(x) for x in hour.split(",")]
     dow_list = [x for x in dow.split(",")]
