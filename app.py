@@ -112,7 +112,7 @@ def graph(hour, dow, month, year, severe):
     return graphJSON
 
 #### PREDICTION PORTION
-# test  2800 Turk Blvd, San Francisco, CA 94118
+# test 2800 Turk Blvd, San Francisco, CA 94118
 # test 444 De Haro St, San Francisco, CA 94107 (discord)
 # test 185 Berry St, San Francisco, CA 94107 (lyft)
 # test 1515 3rd St, San Francisco, CA 94158 (uber)
@@ -188,7 +188,6 @@ def create_graph(location):
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
-    
 #Google Directions API Call 
 def collect_coords(route_json):    
     waypoints = route_json['routes'][0]['legs']
@@ -238,7 +237,42 @@ def calc_distance(accident_dataset, lats, longs, google_count_lat_long):
     return new
 
 def model_pred(lats, longs, new_df):
-
+    new_df = new_df.astype({'school_within_300':'category',
+                'bus_stop_within_300':'category',
+                'speedlimit':'category',
+                'tb_latitude':'float',
+                'tb_longitude':'float',
+                'day_of_year':'category',
+                'accident_year':'category',
+                'distance':'category',
+                'weather_1':'category',
+                'collision_severity':'category',
+                'type_of_collision':'category',
+                'road_surface':'category',
+                'road_cond_1':'category',
+                'lighting':'category',
+                'number_killed':'int',
+                'number_injured':'int',
+                'party1_type':'category',
+                'party1_dir_of_travel':'category',
+                'party1_move_pre_acc':'category',
+                'party2_type':'category',
+                'party2_dir_of_travel':'category',
+                'party2_move_pre_acc':'category',
+                'Neighborhoods':'category',
+                'Current Police Districts':'category',
+                'Current Supervisor Districts':'category',
+                'Analysis Neighborhoods':'category',
+                'hour':'category',
+                'tavg':'category',
+                'tmin':'category',
+                'tmax':'category',
+                'prcp':'category',
+                'snow':'category',
+                'wdir':'category',
+                'wspd':'category',
+                'pres':'category',
+                'CLUSTER_ID':'category'})
     # do prediction for current datetime for all
     prob = pd.DataFrame(model.predict_proba(new_df), columns=['No', 'probability'])
     prob.set_index(new_df[['tb_latitude','tb_longitude']].index, inplace=True)
@@ -319,25 +353,19 @@ def model_time(route_json, tm):
     if len(dat) == 0:
         return False, create_graph(default_location)
     else:
-        # changing month
-        month_col_list = ['January','February','March','April','May','June','July','August','September','October','November','December']
-        dat.loc[:,month_col_list] = 0
-        dat.loc[:,dat[month_col_list[datetime_object.month-1]]] = 1
         # changing hour
-        hour_col_list = ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23']
-        dat.loc[:,hour_col_list] = 0
-        dat.loc[:,dat[hour_col_list[datetime_object.hour]]] = 1
-        # changing day of week
-        dow_col_list = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
-        dat.loc[:,dow_col_list] = 0
-        dat.loc[:,dat[dow_col_list[datetime_object.date().weekday()]]] = 1
+        dat.loc[:,'hour'] = datetime_object.hour
+
+        # changing day of year
+        dat.loc[:,'day_of_year'] = datetime_object.timetuple().tm_yday
+
         # changing year
         year_col_list = ['2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022']
-        dat.loc[:,year_col_list] = 0
-        dat[str(datetime_object.year)] = 1
+        dat.loc[:,'accident_year'] = datetime_object.year
 
         final_df = dat
-        final_df.drop(columns = [0, 'a', 'lat2', 'Unnamed: 0', 'long2', 'long1', 'dlat', 'lat1', 'dlon'], axis=1, inplace=True)
+        #run model predicitions
+        final_df.drop(columns = ['a', 'lat2', 'Unnamed: 0', 'long2', 'long1', 'dlat', 'lat1', 'dlon'], axis=1, inplace=True)
         final_df.drop(columns=['accident'], axis=1, inplace=True)
 
         return True, model_pred(lats, longs, final_df)
