@@ -62,10 +62,14 @@
                 plot_graph = document.getElementById('chart');
                 Plotly.newPlot(plot_graph, chartJson.data, chartJson.layout);
 
-                // inject message from the app. message should be like the address
-                // or the address isnt right is the user didnt do it right
-                document.querySelector('#return-address').innerText = ("From " + addr1 + " to " + addr2 + " on " + get_date[1] + " " + get_date[2] + " at " + get_date[4] + ", " + responseJson.msg);
-                document.querySelector('#return-coord').innerText = responseJson.coord;
+                // if the route is legit, format the message to include 
+                // inputted route and date/time
+                if (responseJson.real_route) {
+                    document.querySelector('#return-address').innerText = ("From " + addr1 + " to " + addr2 + " on " + get_date[1] + " " + get_date[2] + " at " + get_date[4] + ", " + responseJson.msg);
+                } else {
+                    // else just print the error message
+                    document.querySelector('#return-address').innerText = responseJson.msg;
+                }
             } else { 
                     alert("HTTP-Error: " + response.status + " on getResponse for Predict");
                 }
@@ -149,14 +153,14 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">Start Address</span>
                     </div>
-                    <input type="text" class="form-control" id="user-start" value="121 Spear Street" aria-describedby="user starting location" placeholder="Your starting location">
+                    <input type="text" class="form-control" id="user-start" value="1 Dr Carlton B Goodlett Pl" aria-describedby="user starting location" placeholder="Your starting location">
                 </div>
     
                 <div id="user-input" class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">End Address</span>
                     </div>
-                    <input type="text" class="form-control" id="user-end" value="Powell Street BART" placeholder="Your ending location">
+                    <input type="text" class="form-control" id="user-end" value="151 3rd St, San Francisco" placeholder="Your ending location">
                 </div>
             </div>
 

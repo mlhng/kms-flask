@@ -112,10 +112,20 @@ def graph(hour, dow, month, year, severe):
     return graphJSON
 
 #### PREDICTION PORTION
-# test 2800 Turk Blvd, San Francisco, CA 94118
-# test 444 De Haro St, San Francisco, CA 94107 (discord)
-# test 185 Berry St, San Francisco, CA 94107 (lyft)
-# test 1515 3rd St, San Francisco, CA 94158 (uber)
+# default
+# city hall 1 Dr Carlton B Goodlett Pl
+# SF MOMA 151 3rd St, San Francisco
+
+# test invalid address (some random string)
+
+# show if outside of SF
+# uc berkeley 101 Sproul Hall
+# ischool 111 South Dr
+
+### testing different accident routes in SF
+# UCSF 2800 Turk Blvd, San Francisco, CA 94118
+# Discord 444 De Haro St, San Francisco, CA 94107 
+# Lyft 185 Berry St, San Francisco, CA 94107
 
 ### no accidents
 # start 2-298 Dalewood Way, San Francisco
@@ -140,7 +150,7 @@ def route_predict():
                         route_dict['user_datetime'])
 
 def verify_route(origin, destination, user_dt):
-    response = {'msg': None, 'address': None, 'coord': None}
+    response = {'msg': None, 'address': None, 'real_route': None}
     parameters = {'origin': origin, 'destination': destination, 'key': configs['googlekey'], 'mode': 'walking'}
     
     # origin can be address i.e. 24 Sussex Drive Ottawa ON or lat lon, 41.43206, -81.38992 
@@ -158,19 +168,19 @@ def verify_route(origin, destination, user_dt):
 
                 response['msg'] = f"we have predicted {str(len(accident_count['data'][1]['lat']))} accidents!"
                 response['address'] = graphJson
-                response['coord'] = None
+                response['real_route'] = True
             else:
-                response['msg'] = 'we predict no accidents! Yay!'
+                response['msg'] = 'we predict no accidents!\nYou\'re SaFe!'
                 response['address'] = graphJson
-                response['coord'] = None
+                response['real_route'] = True
         else:
             response['msg'] = 'The start and/or the end address is not in San Francisco. Please make sure they are.'
             response['address'] = create_graph(default_location)
-            response['coord'] = None
+            response['real_route'] = False
     else:
         response['msg'] = "Invalid address... Is there a typo? Make sure this is a San Francisco address with no unit number!"
         response['address'] = create_graph(default_location)
-        response['coord'] = None
+        response['real_route'] = False
 
     response_json = json.dumps(response)
     return response_json
