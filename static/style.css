@@ -215,7 +215,8 @@ p {
 
 /* PREDICTING */
 #predict-page #user-info {
-    padding: 2%;
+    box-sizing: border-box;
+    padding: 2rem 2rem 1rem;
     margin-top: 0rem;
 }
 
@@ -258,20 +259,17 @@ p {
 #predict-page #current-time p,
 #predict-page #current-date p {
     display: inline;
+    margin-bottom: 0;
 }
 
 #predict-page .datetime-input .form-check
 {
-    margin-bottom: 1rem;
+    margin-bottom: 0 !important;
 }
 
 #predict-page .datetime-input .form-check input
 {
     margin-top: .5rem;
-}
-
-#predict-page #address-info p {
-    margin-bottom: 0;
 }
 
 #predict-page #return-coord {
@@ -334,6 +332,8 @@ p {
 #relay-information
 {
     text-align: center;
+    width: 95%;
+    margin: auto;
 }
 
 .form-check
@@ -365,6 +365,11 @@ footer {
         padding-top: 15vh !important;
     }
 
+    #user-info
+    {
+        margin-bottom: 1rem;
+    }
+
     .current-datetime,
     .set-datetime
     {
@@ -375,6 +380,11 @@ footer {
     .pick-time
     {
         width: 50%;
+    }
+
+    #chart
+    {
+        padding: 0;
     }
 }
 

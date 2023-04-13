@@ -60,7 +60,6 @@
                 // convert address json to actual json to use to plot
                 chartJson = JSON.parse(responseJson.address);
                 plot_graph = document.getElementById('chart');
-                console.log(chartJson);
                 Plotly.newPlot(plot_graph, chartJson.data, chartJson.layout);
 
                 // inject message from the app. message should be like the address
