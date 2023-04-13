@@ -60,11 +60,12 @@
                 // convert address json to actual json to use to plot
                 chartJson = JSON.parse(responseJson.address);
                 plot_graph = document.getElementById('chart');
+                console.log(chartJson);
                 Plotly.newPlot(plot_graph, chartJson.data, chartJson.layout);
 
                 // inject message from the app. message should be like the address
                 // or the address isnt right is the user didnt do it right
-                document.querySelector('#return-address').innerText = responseJson.msg;
+                document.querySelector('#return-address').innerText = ("From " + addr1 + " to " + addr2 + " on " + get_date[1] + " " + get_date[2] + " at " + get_date[4] + ", " + responseJson.msg);
                 document.querySelector('#return-coord').innerText = responseJson.coord;
             } else { 
                     alert("HTTP-Error: " + response.status + " on getResponse for Predict");

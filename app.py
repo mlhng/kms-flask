@@ -116,6 +116,11 @@ def graph(hour, dow, month, year, severe):
 # test 444 De Haro St, San Francisco, CA 94107 (discord)
 # test 185 Berry St, San Francisco, CA 94107 (lyft)
 # test 1515 3rd St, San Francisco, CA 94158 (uber)
+
+### no accidents
+# start 2-298 Dalewood Way, San Francisco
+# end 290 Melrose Ave, San Francisco
+
 @app.route('/predict')
 def predict():
     return render_template('predict.html', 
@@ -149,11 +154,13 @@ def verify_route(origin, destination, user_dt):
         if 'San Francisco' in route_json['routes'][0]['legs'][0]['start_address'] and 'San Francisco' in route_json['routes'][0]['legs'][0]['end_address']:
             did_accident_happen, graphJson = model_time(route_json, user_dt)
             if did_accident_happen:
-                response['msg'] = 'Accidents have been predicted!'
+                accident_count = json.loads(graphJson)
+
+                response['msg'] = f"we have predicted {str(len(accident_count['data'][1]['lat']))} accidents!"
                 response['address'] = graphJson
                 response['coord'] = None
             else:
-                response['msg'] = 'No accidents predicted on given route! Yay!'
+                response['msg'] = 'we predict no accidents! Yay!'
                 response['address'] = graphJson
                 response['coord'] = None
         else:
@@ -336,6 +343,16 @@ def model_graph(lats, longs, accident_output):
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
+#### PREDICTION PORTION
+# test 2800 Turk Blvd, San Francisco, CA 94118
+# test 444 De Haro St, San Francisco, CA 94107 (discord)
+# test 185 Berry St, San Francisco, CA 94107 (lyft)
+# test 1515 3rd St, San Francisco, CA 94158 (uber)
+
+### no accidents
+# start 2-298 Dalewood Way, San Francisco
+# end 290 Melrose Ave, San Francisco
+
 # MAIN MODEL PREDICTION
 def model_time(route_json, tm):
     #parse time
@@ -351,7 +368,7 @@ def model_time(route_json, tm):
     dat = dist[dist['distance'] < 0.050]
     #if no cluster, exit
     if len(dat) == 0:
-        return False, create_graph(default_location)
+        return False, model_graph(lats=lats, longs=longs, accident_output={"lat": [], "lng": [], 'probability': []})
     else:
         # changing hour
         dat.loc[:,'hour'] = datetime_object.hour
