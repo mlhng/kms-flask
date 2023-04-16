@@ -56,7 +56,7 @@
         }
 
         // fetch the link related to the cb_viz which calls the flask function
-        let response = await fetch("/cb_viz/getAccidents?hour=" + hour + "&dow=" + dow + "&month=" + month + "&year=" + year + "&severe=" + severe);
+        let response = await fetch(`/cb_viz/getAccidents?hour=${hour}&dow=${dow}&month=${month}&year=${year}&severe=${severe}`);
 
         // if the call is sucessful
         if (response.ok) {
@@ -65,10 +65,10 @@
                 plot_graph = document.getElementById('chart');
                 Plotly.newPlot(plot_graph, chartJson.data, chartJson.layout);
             } else { 
-                    alert("HTTP-Error: " + response.status + " on getInfo");
+                    alert(`HTTP-Error: ${response.status} on getResponse for Visualize`);
                 }
         } else {
-            alert("HTTP-Error: " + response.status + " on getAccidents");
+            alert(`HTTP-Error: ${response.status} on getRoute`);
         }
     } 
 
@@ -96,7 +96,7 @@
         <h1>Explore the data on your own!</h1>
         <div id="blue-line"></div>
         <p>Curious about the data we've used for our ML model? With the chart provided below, you can 
-            look through the traffic accident data from 2012 until Feb 2023.</p>
+            look through the traffic accident data from Jan 2012 until Dec 2022.</p>
     </div>
 
     <div class="row g-3" id="viz-section">

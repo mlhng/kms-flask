@@ -48,10 +48,11 @@
             return;
         }
 
-        let user_date = get_date[3] + "/" + get_date[1] + "/" + get_date[2] + " " + get_date[4];
+        let user_date = `${get_date[3]}/${get_date[1]}/${get_date[2]} ${get_date[4]}`;
 
         // fetch the link related to the cb_viz which calls the flask function
-        let response = await fetch("/route_predict/getRoute?addr1=" + addr1 + "&addr2=" + addr2 + "&user_datetime=" + user_date);
+        
+        let response = await fetch(`/route_predict/getRoute?addr1=${addr1}&addr2=${addr2}&user_datetime=${user_date}`);
     
         // if the call is sucessful
         if (response.ok) {
@@ -65,16 +66,16 @@
                 // if the route is legit, format the message to include 
                 // inputted route and date/time
                 if (responseJson.real_route) {
-                    document.querySelector('#return-address').innerText = ("From " + addr1 + " to " + addr2 + " on " + get_date[1] + " " + get_date[2] + " at " + get_date[4] + ", " + responseJson.msg);
+                    document.querySelector('#return-address').innerText = (`From ${addr1} to ${addr2} on ${get_date[1]} ${get_date[2]} at ${get_date[4]}, ${responseJson.msg}`);
                 } else {
                     // else just print the error message
                     document.querySelector('#return-address').innerText = responseJson.msg;
                 }
             } else { 
-                    alert("HTTP-Error: " + response.status + " on getResponse for Predict");
+                    alert(`HTTP-Error: ${response.status} on getResponse for Predict`);
                 }
         } else {
-            alert("HTTP-Error: " + response.status + " on getRoute");
+            alert(`HTTP-Error: ${response.status} on getRoute for Predict`);
         }
     }
 

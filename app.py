@@ -119,7 +119,6 @@ def graph(hour, dow, month, year, severe):
 # test invalid address (some random string)
 
 # show if outside of SF
-# uc berkeley 101 Sproul Hall
 # ischool 111 South Dr
 
 ### testing different accident routes in SF
@@ -130,6 +129,8 @@ def graph(hour, dow, month, year, severe):
 ### no accidents
 # start 2-298 Dalewood Way, San Francisco
 # end 290 Melrose Ave, San Francisco
+
+# demonstrate hover information
 
 @app.route('/predict')
 def predict():
