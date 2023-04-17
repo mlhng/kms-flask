@@ -184,6 +184,7 @@ p {
 
 #visualize-page #filtering {
     padding: 2%;
+    margin-top: 0;
 }
 
 #visualize-page #filter-header {
